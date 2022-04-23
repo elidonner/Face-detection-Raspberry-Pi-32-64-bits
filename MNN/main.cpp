@@ -16,7 +16,8 @@ int main(int argc, char **argv) {
 
     UltraFace ultraface("slim-320-quant-ADMM-50.mnn", 320, 240, 4, 0.65); // config model input
 
-    cv::VideoCapture cap("Walks2.mp4");
+    cv::VideoCapture cap(-1);
+    //cv::VideoCapture cap("Walks2.mp4");
     if (!cap.isOpened()) {
         cerr << "ERROR: Unable to open the camera" << endl;
         return 0;
