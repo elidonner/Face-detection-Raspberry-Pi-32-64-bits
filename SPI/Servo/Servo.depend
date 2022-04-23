@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1650748367 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/SPI/Servo/main.c
+	<stdio.h>
+	<stdlib.h>
+	<signal.h>
+	<pigpio.h>
+
