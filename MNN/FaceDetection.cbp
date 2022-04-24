@@ -26,6 +26,11 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="sudo" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lpigpio" />
+					<Add option="-lrt" />
 				</Linker>
 			</Target>
 		</Build>
@@ -45,6 +50,8 @@
 		<Unit filename="MNN_UltraFace.cpp" />
 		<Unit filename="MNN_UltraFace.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="servo.cpp" />
+		<Unit filename="servo.hpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

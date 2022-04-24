@@ -1,14 +1,16 @@
 #include "MNN_UltraFace.hpp"
 #include <iostream>
 #include <opencv2/opencv.hpp>
-// #include "Servo.hpp"
+#include "servo.hpp"
 
 using namespace std;
 
 int main(int argc, char **argv) {
+    int ii;
     float f;
     float FPS[16];
     int i, Fcnt=0;
+    ii = 1;
     cv::Mat frame;
     //some timing
     chrono::steady_clock::time_point Tbegin, Tend;
@@ -16,6 +18,7 @@ int main(int argc, char **argv) {
     for(i=0;i<16;i++) FPS[i]=0.0;
 
     UltraFace ultraface("slim-320-quant-ADMM-50.mnn", 320, 240, 4, 0.65); // config model input
+    Servo servo(0, 1000, 2000, 1500);
 
     cv::VideoCapture cap(-1);
     //cv::VideoCapture cap("Walks2.mp4");
@@ -45,6 +48,16 @@ int main(int argc, char **argv) {
             cv::Point pt2(face.x2, face.y2);
             cv::rectangle(frame, pt1, pt2, cv::Scalar(0, 255, 0), 2);
         }
+
+        if(ii == 1){
+            servo.moveToAngle(60, 4);
+            ii = 2;
+        } else if(ii == 2){
+            servo.moveToAngle(30, 4);
+            ii = 1;
+        }
+
+
 
         //calculate frame rate
         f = chrono::duration_cast <chrono::milliseconds> (Tend - Tbegin).count();
