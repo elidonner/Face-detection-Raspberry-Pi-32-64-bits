@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1650673819 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/MNN_UltraFace.cpp
+1650770159 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/MNN_UltraFace.cpp
 	"MNN_UltraFace.hpp"
 
-1650673819 /home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/MNN_UltraFace.hpp
+1650770159 /home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/MNN_UltraFace.hpp
 	"Interpreter.hpp"
 	"MNNDefine.h"
 	"Tensor.hpp"
@@ -643,15 +643,15 @@
 1608580898 /usr/local/include/opencv4/opencv2/video/background_segm.hpp
 	"opencv2/core.hpp"
 
-1650756994 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/main.cpp
+1650772570 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/main.cpp
 	"MNN_UltraFace.hpp"
 	<iostream>
 	<opencv2/opencv.hpp>
 	"servo.hpp"
 
-1650759223 /home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/servo.hpp
+1650773307 /home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/servo.hpp
 
-1650759472 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/servo.cpp
+1650773331 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/MNN/servo.cpp
 	<stdio.h>
 	<stdlib.h>
 	<signal.h>

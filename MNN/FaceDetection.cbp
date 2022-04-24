@@ -20,17 +20,11 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="RFB-320-quant-ADMM-32.mnn 1.jpg" />
 				<Compiler>
 					<Add option="-O3" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="sudo" />
-					<Add option="-Wall" />
-					<Add option="-pthread" />
-					<Add option="-lpigpio" />
-					<Add option="-lrt" />
 				</Linker>
 			</Target>
 		</Build>
@@ -44,6 +38,9 @@
 		<Linker>
 			<Add option="`pkg-config --libs --cflags opencv4`" />
 			<Add option="-pthread" />
+			<Add option="-Wall" />
+			<Add option="-lpigpio" />
+			<Add option="-lrt" />
 			<Add library="/usr/local/lib/libMNN.so" />
 			<Add directory="/usr/local/lib/" />
 		</Linker>

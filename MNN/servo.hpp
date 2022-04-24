@@ -4,40 +4,47 @@
 class Servo
 {
 
-    public:
+public:
 
-        /**
-        * Constructor
-        */
-        Servo(int limit,
+    /**
+    * Constructor
+    */
+    Servo(int pin,
+            int limit,
             int min_width,
             int max_width,
             int pulseWidth);
 
 
-        /**
-        * Move servo to given angle
-        */
-        int moveToAngle(int angle, int pin);
+    /**
+    * Move servo to given angle
+    */
+    void moveToAngle(int angle);
 
-    protected:
+    /**
+    * initialize a servo
+    */
+    int init();
 
-    private:
-        int _limit;
-        int _min_width;
-        int _max_width;
-        int _pulseWidth;
+    /**
+    * kill servo
+    */
+    void kill();
 
-        /**
-        * initialize a servo
-        */
-        int start();
+protected:
+
+private:
+    int _pin;
+    int _limit;
+    int _min_width;
+    int _max_width;
+    int _pulseWidth;
 
 
-        /**
-        * convert an angle to pulseWidth angle
-        */
-        int convertAngle(int angle);
+    /**
+    * convert an angle to pulseWidth angle
+    */
+    int convertAngle(int angle);
 };
 
 
