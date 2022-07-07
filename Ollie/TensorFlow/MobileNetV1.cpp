@@ -3,7 +3,7 @@
 using namespace cv;
 using namespace std;
 
-UltraPerson::UltraPerson(std::string &yolo_path, int input_width, int input_height, int num_thread_ = 4, float score_trheshold_)
+UltraPerson::UltraPerson(std::string &yolo_path, int input_width = 300, int input_height = 300, int num_thread_ = 4, float score_threshold_= 0.5)
 {
     width = input_width;
     height = input_height;
@@ -22,7 +22,7 @@ UltraPerson::UltraPerson(std::string &yolo_path, int input_width, int input_heig
     interpreter->SetNumThreads(num_thread); // quad core
 
     // Get the names
-    bool result = UltraPerson.getFileContent("COCO_labels.txt");
+    bool result = getFileContent("COCO_labels.txt");
     if (!result)
     {
         cout << "loading labels failed";
@@ -31,13 +31,7 @@ UltraPerson::UltraPerson(std::string &yolo_path, int input_width, int input_heig
 
 }
 
-// UltraPerson::~UltraPerson()
-// {
-//     ultraface_interpreter->releaseModel();
-//     ultraface_interpreter->releaseSession(ultraface_session);
-// }
-
-UltraPerson::getFileContent(std::string fileName)
+bool UltraPerson::getFileContent(std::string fileName)
 {
     // Open the File
     std::ifstream in(fileName.c_str());
@@ -58,7 +52,7 @@ UltraPerson::getFileContent(std::string fileName)
     return true;
 }
 
-UltraPerson::detect(Mat &src, std::vector<PersonInfo> &personList)
+int UltraPerson::detect(Mat &src, std::vector<PersonInfo> &personList)
 {
     Mat image;
     int cam_width = src.cols;
@@ -92,75 +86,16 @@ UltraPerson::detect(Mat &src, std::vector<PersonInfo> &personList)
             if (detection_scores[i] > score_threshold)
             {
 
-                FaceInfo rects;
+                PersonInfo rects;
                 memset(&rects, 0, sizeof(rects));
                 rects.y1 = detection_locations[4 * i] * cam_height;
                 rects.x1 = detection_locations[4 * i + 1] * cam_width;
                 rects.y2 = detection_locations[4 * i + 2] * cam_height;
                 rects.x2 = detection_locations[4 * i + 3] * cam_width;
 
-                personList.pushBack(rects);
+                personList.push_back(rects);
             }
         }
     }
-}
-
-int main(int argc, char **argv)
-{
-    float f;
-    float FPS[16];
-    int i, Fcnt = 0;
-    Mat frame;
-    chrono::steady_clock::time_point Tbegin, Tend;
-
-    for (i = 0; i < 16; i++)
-        FPS[i] = 0.0;
-
-    VideoCapture cap(-1);
-    if (!cap.isOpened())
-    {
-        cerr << "ERROR: Unable to open the camera" << endl;
-        return 0;
-    }
-
-    cout << "Start grabbing, press ESC on Live window to terminate" << endl;
-    while (1)
-    {
-        //        frame=imread("Traffic.jpg");  //need to refresh frame before dnn class detection
-        cap >> frame;
-        if (frame.empty())
-        {
-            cerr << "ERROR: Unable to grab from the camera" << endl;
-            break;
-        }
-
-        Tbegin = chrono::steady_clock::now();
-
-        detect_from_video(frame);
-
-        Tend = chrono::steady_clock::now();
-        // calculate frame rate
-        f = chrono::duration_cast<chrono::milliseconds>(Tend - Tbegin).count();
-        if (f > 0.0)
-            FPS[((Fcnt++) & 0x0F)] = 1000.0 / f;
-        for (f = 0.0, i = 0; i < 16; i++)
-        {
-            f += FPS[i];
-        }
-        putText(frame, format("FPS %0.2f", f / 16), Point(10, 20), FONT_HERSHEY_SIMPLEX, 0.6, Scalar(0, 0, 255));
-
-        // show output
-        //        cout << "FPS" << f/16 << endl;
-        imshow("RPi 4 - 1,9 GHz - 2 Mb RAM", frame);
-
-        char esc = waitKey(5);
-        if (esc == 27)
-            break;
-    }
-
-    cout << "Closing the camera" << endl;
-    destroyAllWindows();
-    cout << "Bye!" << endl;
-
     return 0;
 }

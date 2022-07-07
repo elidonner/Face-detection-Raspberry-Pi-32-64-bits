@@ -66,7 +66,7 @@ int main(int argc, char **argv)
 
         // Load Model
 #ifdef FaceDetection
-    UltraFace deepModel("slim-320-quant-ADMM-50.mnn", 320, 240, 4, 0.65); // config model input
+    UltraFace deepModel("/MNN/slim-320-quant-ADMM-50.mnn", 320, 240, 4, 0.65); // config model input
 #else
     UltraPerson deepModel("detect.tflite", 320, 240, 0.65, 4);
 #endif
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 
 #ifdef FaceDetection
         vector<FaceInfo> person_info;
-        deepModel.detect(frame, face_info);
+        deepModel.detect(frame, person_info);
 #else
         vector<PersonInfo> person_info;
         deepModel.detect(frame, person_info);
@@ -178,6 +178,8 @@ int main(int argc, char **argv)
     }
 
     servo.kill();
+    cout << "Closing the camera" << endl;
     cv::destroyAllWindows();
+    cout << "Bye!" << endl;
     return 0;
 }

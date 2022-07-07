@@ -29,36 +29,31 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<!--Both-->
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-pthread" />
 			<Add directory="/usr/local/include/opencv4" />
-			<!--MNN-->
 			<Add directory="/usr/local/include/MNN" />
-			<!--TensorFlow-->
 			<Add directory="/home/ubuntu/tensorflow" />
 			<Add directory="/home/ubuntu/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/include" />
 			<Add directory="/home/ubuntu/tensorflow/tensorflow/lite/tools/make/downloads/absl" />
 			<Add directory="/home/pi/tensorflow" />
 			<Add directory="/home/pi/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/include" />
 			<Add directory="/home/pi/tensorflow/tensorflow/lite/tools/make/downloads/absl" />
+			<Add directory="/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/MNN" />
+			<Add directory="/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/TensorFlow" />
 		</Compiler>
 		<Linker>
-			<!--Both-->
 			<Add option="`pkg-config --libs --cflags opencv4`" />
 			<Add option="-pthread" />
 			<Add option="-Wall" />
-			<!--Servo-->
 			<Add option="-lpigpio" />
 			<Add option="-lrt" />
-			<!--MNN-->
 			<Add library="/usr/local/lib/libMNN.so" />
-			<Add directory="/usr/local/lib/" />
-			<!--TensorFlow-->
-						<Add library="libtensorflow-lite.a" />
+			<Add library="libtensorflow-lite.a" />
 			<Add library="libflatbuffers.a" />
 			<Add library="/lib/aarch64-linux-gnu/libdl.so.2" />
+			<Add directory="/usr/local/lib/" />
 			<Add directory="/home/pi/tensorflow/tensorflow/lite/tools/make/gen/linux_aarch64/lib" />
 			<Add directory="/home/ubuntu/tensorflow/tensorflow/lite/tools/make/gen/linux_aarch64/lib" />
 			<Add directory="/home/ubuntu/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/build" />
@@ -68,9 +63,9 @@
 		<Unit filename="MNN_UltraFace.hpp" />
 		<Unit filename="MobileNetV1.cpp" />
 		<Unit filename="MobileNetV1.hpp" />
+		<Unit filename="main.cpp" />
 		<Unit filename="servo.cpp" />
 		<Unit filename="servo.hpp" />
-		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
