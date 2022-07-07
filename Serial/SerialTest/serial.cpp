@@ -12,7 +12,14 @@ using namespace std;
 const uint8_t numBytes = 32;
 uint8_t receivedBytes[numBytes];
 uint8_t numReceived = 0;
+int serial_port, writeFlag;
 
+void showNewData() {
+    for (uint8_t n = 0; n < numReceived; n++) {
+      printf("%c", receivedBytes[n]);
+    }
+    fflush(stdout);
+}
 
 int recvBytesWithStartEndMarkers() {
     static bool recvInProgress = false;
@@ -20,8 +27,8 @@ int recvBytesWithStartEndMarkers() {
     uint8_t startMarker = 0x3C; //this is the start marker <
     uint8_t endMarker = 0x3E; //this is the start marker >
     uint8_t rb;
-   
-    while (serDataAvailable () > 0 && newData == false) {
+
+    while (serDataAvailable (serial_port) > 0) {
         rb = serReadByte(serial_port);
 
         if (recvInProgress == true) {
@@ -38,7 +45,7 @@ int recvBytesWithStartEndMarkers() {
                 numReceived = ndx;  // save the number for use when printing
                 ndx = 0;
                 showNewData();
-                break;
+                return 1;
             }
         }
 
@@ -46,22 +53,12 @@ int recvBytesWithStartEndMarkers() {
             recvInProgress = true;
         }
     }
-}
-
-void showNewData() {
-    Serial.print("This just in (HEX values)... ");
-    for (uint8_t n = 0; n < numReceived; n++) {
-      printf("%c", receivedBytes[n]) ;
-    }
-    Serial.println();
+    return 0;
 }
 
 
 int main ()
 {
-
-  int serial_port, writeFlag;
-  char dat;
   char serialName[] = "/dev/ttyS0";
 
   if (gpioInitialise() < 0)
@@ -75,19 +72,19 @@ int main ()
     return 1;
   }
 
-  char msg[] = "<hello world>";
+  char msg[] = "<hello esp>";
 
   while(1)
   {
-    if(serDataAvailable (serial_port) )
-	  {
-      writeFlag = recvBytesWithStartEndMarkers();
-      dat = serReadByte(serial_port);		/* receive character serially*/
+    if(writeFlag){
+        serWrite(serial_port, msg, sizeof(msg));
+        writeFlag = 0;
     }
-    if 
-    (
+    else if(serDataAvailable (serial_port) )
+    {
+      writeFlag = recvBytesWithStartEndMarkers();
+    }
 
-    )
   }
 
 }

@@ -16,12 +16,17 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-Wall" />
+					<Add option="-pthread" />
+					<Add option="-lpigpio" />
+					<Add option="-lrt" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="serial.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
