@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     // 3D model points.
     std::vector<cv::Point3d> model_points;
     model_points.push_back(cv::Point3d(0.0f, 0.0f, 0.0f));               // Nose tip
-//    model_points.push_back(cv::Point3d(0.0f, -330.0f, -65.0f));          // reel Chin
+    //model_points.push_back(cv::Point3d(0.0f, -330.0f, -65.0f));          // reel Chin
     model_points.push_back(cv::Point3d(0.0f, -300.0f, -65.0f));          // interpolate chin
     model_points.push_back(cv::Point3d(-225.0f, 170.0f, -135.0f));       // Left eye left corner
     model_points.push_back(cv::Point3d(225.0f, 170.0f, -135.0f));        // Right eye right corner

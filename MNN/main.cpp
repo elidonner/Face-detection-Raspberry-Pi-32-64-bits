@@ -139,10 +139,6 @@ int main(int argc, char **argv)
             }
         }
 
-
-
-
-
         //calculate frame rate
         f = chrono::duration_cast <chrono::milliseconds> (Tend - Tbegin).count();
         if(f>0.0)
