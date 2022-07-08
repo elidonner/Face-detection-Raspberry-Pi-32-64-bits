@@ -32,7 +32,7 @@ typedef struct PersonInfo
 class UltraPerson
 {
 public:
-    UltraPerson(std::string &yolo_path, int input_width, int input_height, int num_thread_, float score_trheshold_);
+    UltraPerson(const std::string &yolo_path, int input_width, int input_height, int num_thread_, float score_trheshold_);
 
     int detect(cv::Mat &img, std::vector<PersonInfo> &personList);
 
@@ -40,12 +40,13 @@ private:
     bool getFileContent(std::string fileName);
 
 private:
-    size_t width;
-    size_t height;
+    int width;
+    int height;
     float score_threshold;
     int num_thread;
     std::vector<std::string> Labels;
     std::unique_ptr<tflite::Interpreter> interpreter;
+    std::unique_ptr<tflite::FlatBufferModel> model;
 };
 
 #endif /* MobileNetV1_hpp */

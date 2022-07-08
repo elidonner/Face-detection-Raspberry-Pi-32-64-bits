@@ -3,7 +3,7 @@
 using namespace cv;
 using namespace std;
 
-UltraPerson::UltraPerson(std::string &yolo_path, int input_width = 300, int input_height = 300, int num_thread_ = 4, float score_threshold_= 0.5)
+UltraPerson::UltraPerson(const std::string &yolo_path, int input_width = 300, int input_height = 300, int num_thread_ = 4, float score_threshold_= 0.5)
 {
     width = input_width;
     height = input_height;
@@ -11,18 +11,15 @@ UltraPerson::UltraPerson(std::string &yolo_path, int input_width = 300, int inpu
     num_thread = num_thread_;
 
     // Load model
-    std::unique_ptr<tflite::FlatBufferModel> model = tflite::FlatBufferModel::BuildFromFile("yolo_path");
+    model = tflite::FlatBufferModel::BuildFromFile(yolo_path.c_str());
     // Build the interpreter
     tflite::ops::builtin::BuiltinOpResolver resolver;
     tflite::InterpreterBuilder(*model.get(), resolver)(&interpreter);
 
     interpreter->AllocateTensors();
 
-    interpreter->SetAllowFp16PrecisionForFp32(true);
-    interpreter->SetNumThreads(num_thread); // quad core
-
     // Get the names
-    bool result = getFileContent("COCO_labels.txt");
+    bool result = getFileContent("./TensorFlow/COCO_labels.txt");
     if (!result)
     {
         cout << "loading labels failed";
@@ -59,8 +56,11 @@ int UltraPerson::detect(Mat &src, std::vector<PersonInfo> &personList)
     int cam_height = src.rows;
 
     // copy image to input as input tensor
-    cv::resize(src, image, Size(300, 300));
+    cv::resize(src, image, Size(width, height));
     memcpy(interpreter->typed_input_tensor<uchar>(0), image.data, image.total() * image.elemSize());
+
+    interpreter->SetAllowFp16PrecisionForFp32(true);
+    interpreter->SetNumThreads(num_thread); // quad core
 
     //        cout << "tensors size: " << interpreter->tensors_size() << "\n";
     //        cout << "nodes size: " << interpreter->nodes_size() << "\n";
@@ -92,6 +92,7 @@ int UltraPerson::detect(Mat &src, std::vector<PersonInfo> &personList)
                 rects.x1 = detection_locations[4 * i + 1] * cam_width;
                 rects.y2 = detection_locations[4 * i + 2] * cam_height;
                 rects.x2 = detection_locations[4 * i + 3] * cam_width;
+                rects.score = detection_scores[i];
 
                 personList.push_back(rects);
             }
