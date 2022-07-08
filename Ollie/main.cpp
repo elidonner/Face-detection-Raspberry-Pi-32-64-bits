@@ -2,6 +2,7 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include "servo.hpp"
+#include "serial.hpp"
 
 // ONLY HAVE ONE OF FOLLOWING UNCOMMENTED
 #define FaceDetection
@@ -71,12 +72,18 @@ int main(int argc, char **argv)
     UltraPerson deepModel("detect.tflite", 320, 240, 0.65, 4);
 #endif
 
-    Servo servo(4, 0, 1000, 2000, 1500);
-    if (servo.init())
+    //Start the gpio pins with pigpio
+    //Needs to be done before Servo or Serial can be used
+    if (gpioInitialise() < 0)
     {
-        cerr << "ERROR: Unable to start servo" << endl;
-        return 0;
+        return 1;
     }
+    //gpioSetSignalFunc(SIGINT, stop);
+
+    //Initialize a servo
+    Servo servo(4, 0, 1000, 2000, 1500);
+    //Initialize Serial
+    Serial serial("/dev/ttyS0", 115200);
 
     cv::VideoCapture cap(-1);
     if (!cap.isOpened())
@@ -175,6 +182,11 @@ int main(int argc, char **argv)
         char esc = cv::waitKey(5);
         if (esc == 27)
             break;
+
+        //Check for serial
+        if(serial.available()){
+            serial.read
+        }
     }
 
     servo.kill();

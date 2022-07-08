@@ -27,14 +27,6 @@ void Servo::moveToAngle(int angle)
 
 }
 
-int Servo::init()
-{
-    //not sure what these lines do but we need them
-    if (gpioInitialise() < 0){return 1;}
-    //gpioSetSignalFunc(SIGINT, stop);
-    return 0;
-}
-
 void Servo::kill()
 {
     //tidy up the gpio

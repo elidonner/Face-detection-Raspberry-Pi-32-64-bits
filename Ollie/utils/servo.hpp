@@ -22,11 +22,6 @@ public:
     void moveToAngle(int angle);
 
     /**
-    * initialize a servo
-    */
-    int init();
-
-    /**
     * kill servo
     */
     void kill();
