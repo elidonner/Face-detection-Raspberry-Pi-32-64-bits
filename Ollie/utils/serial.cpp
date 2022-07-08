@@ -5,12 +5,11 @@
 #include "serial.hpp"
 using namespace std;
 
-Serial::Serial(char &serialName, int baudRate)
+Serial::Serial(char *serialName, int baudRate)
 {
     if ((serial_port = serOpen(serialName, baudRate, 0)) < 0) /* open serial port */
     {
         cout << "faliure";
-        return 1;
     }
 }
 
@@ -19,9 +18,18 @@ bool Serial::available()
     return serDataAvailable(serial_port);
 }
 
-void Serial::write(char &msg)
+void Serial::write(char *msg)
 {
     serWrite(serial_port, msg, sizeof(msg));
+}
+
+void Serial::showNewData()
+{
+    for (uint8_t n = 0; n < numReceived; n++)
+    {
+        printf("%c", receivedBytes[n]);
+    }
+    fflush(stdout);
 }
 
 int Serial::read()
@@ -65,13 +73,4 @@ int Serial::read()
         }
     }
     return 0;
-}
-
-void Serial::showNewData()
-{
-    for (uint8_t n = 0; n < numReceived; n++)
-    {
-        printf("%c", receivedBytes[n]);
-    }
-    fflush(stdout);
 }

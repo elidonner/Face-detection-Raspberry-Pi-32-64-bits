@@ -15,7 +15,7 @@ public:
     /**
     * Constructor
     */
-    Serial(char& serialName, int baudRate);
+    Serial(char* serialName, int baudRate);
 
     /**
     * check if serial port is available
@@ -25,7 +25,7 @@ public:
     /**
     * write given msg
     */
-    void write(char& msg);
+    void write(char* msg);
 
     /**
      * read msg from serial port
@@ -36,8 +36,10 @@ public:
 protected:
 
 private:
+    void showNewData();
+private:
     const uint8_t numBytes = 32;
-    uint8_t receivedBytes[numBytes];
+    uint8_t receivedBytes[32];
     uint8_t numReceived = 0;
     int serial_port;
 };

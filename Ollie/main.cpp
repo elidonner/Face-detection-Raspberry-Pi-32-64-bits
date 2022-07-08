@@ -1,11 +1,10 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include "servo.hpp"
-#include "serial.hpp"
+#include "utils/servo.hpp"
+#include "utils/serial.hpp"
 
-// ONLY HAVE ONE OF FOLLOWING UNCOMMENTED
-// #define FaceDetection
-//#define PersonDetection
+// UNCOMMENT TO SEE FACE DETECTION
+ #define FaceDetection
 
 #ifdef FaceDetection
 #include "MNN_UltraFace.hpp"
@@ -193,7 +192,7 @@ int main(int argc, char **argv)
 
         //Check for serial
         if(serial.available()){
-            serial.read
+            serial.read();
         }
     }
 

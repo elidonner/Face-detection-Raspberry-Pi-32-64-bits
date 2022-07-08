@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1657241674 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/main.cpp
+1657300485 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/main.cpp
 	<iostream>
 	<opencv2/opencv.hpp>
-	"servo.hpp"
+	"utils/servo.hpp"
+	"utils/serial.hpp"
 	"MNN_UltraFace.hpp"
 	"MobileNetV1.hpp"
 
@@ -659,7 +660,7 @@
 	<pigpio.h>
 	"servo.hpp"
 
-1657278967 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/TensorFlow/MobileNetV1.cpp
+1657279403 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/TensorFlow/MobileNetV1.cpp
 	"MobileNetV1.hpp"
 
 1657279088 /home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/TensorFlow/MobileNetV1.hpp
@@ -931,4 +932,23 @@
 	<vector>
 	"tensorflow/lite/c/common.h"
 	"tensorflow/lite/string_type.h"
+
+1657279744 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/utils/servo.cpp
+	<stdio.h>
+	<stdlib.h>
+	<signal.h>
+	<pigpio.h>
+	"servo.hpp"
+
+1657279744 /home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/utils/servo.hpp
+
+1657279968 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/utils/serial.cpp
+	"serial.hpp"
+
+1657279985 /home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Ollie/utils/serial.hpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<signal.h>
+	<pigpio.h>
 
