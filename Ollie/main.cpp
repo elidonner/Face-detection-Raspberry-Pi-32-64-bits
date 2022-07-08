@@ -1,20 +1,29 @@
-#include "MNN_UltraFace.hpp"
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include "servo.hpp"
 
 // ONLY HAVE ONE OF FOLLOWING UNCOMMENTED
-#define FaceDetection
-// #define PersonDetection
+// #define FaceDetection
+//#define PersonDetection
+
+#ifdef FaceDetection
+#include "MNN_UltraFace.hpp"
+#else
+#include "MobileNetV1.hpp"
+#endif
 
 using namespace std;
 
-int calculate_num_faces(vector<FaceInfo> face_info)
+#ifdef FaceDetection
+int calculate_num_faces(vector<FaceInfo> person_info)
+#else
+int calculate_num_faces(vector<PersonInfo> person_info)
+#endif
 {
     // initialize length
     int length = 0;
 
-    for (auto face : face_info)
+    for (auto person : person_info)
     {
         length++;
     }
@@ -54,9 +63,7 @@ int main(int argc, char **argv)
     float FPS[16];
     int i, angle, Fcnt = 0;
     cv::Mat frame;
-#ifdef FaceDetection
     int face_there = 0;
-#endif
 
     // some timing
     chrono::steady_clock::time_point Tbegin, Tend;
@@ -66,9 +73,9 @@ int main(int argc, char **argv)
 
         // Load Model
 #ifdef FaceDetection
-    UltraFace deepModel("/MNN/slim-320-quant-ADMM-50.mnn", 320, 240, 4, 0.65); // config model input
+    UltraFace deepModel("./MNN/slim-320-quant-ADMM-50.mnn", 320, 240, 4, 0.65); // config model input
 #else
-    UltraPerson deepModel("detect.tflite", 320, 240, 0.65, 4);
+    UltraPerson deepModel("./TensorFlow/detect.tflite", 300, 300, 4, 0.65);
 #endif
 
     Servo servo(4, 0, 1000, 2000, 1500);
@@ -108,12 +115,13 @@ int main(int argc, char **argv)
 
         Tend = chrono::steady_clock::now();
 
-        // int length = calculate_num_faces(face_info);
-        // int mag[length];
-        // int centerX[length];
+//         int length = calculate_num_faces(face_info);
+//         int mag[length];
+//         int centerX[length];
         int centerX;
         bool first_face = true;
         int j = 0;
+
         for (auto person : person_info)
         {
             cv::Point pt1(person.x1, person.y1);
@@ -130,13 +138,13 @@ int main(int argc, char **argv)
             // centerY = int((face.y1 + face.y2)/2);
         }
 
-        // print positions
-        // print_pos_and_size(centerX, mag, length);
-        // cout<<"center y position is: "<<centerY<<endl;
+//         //print positions
+//         print_pos_and_size(centerX, mag, length);
+//         cout<<"center y position is: "<<centerY<<endl;
 
-        // experimentally x seemed to go from 40 - 600
-        // so mapping them to an angle of 30 -> 200 degrees:
-        // int center = find_closest_face(mag, centerX, length);
+//         //experimentally x seemed to go from 40 - 600
+//         //so mapping them to an angle of 30 -> 200 degrees:
+//         int center = find_closest_face(mag, centerX, length);
         if (j > 1)
         {
             face_there--;

@@ -59,10 +59,10 @@
 			<Add directory="/home/ubuntu/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/build" />
 			<Add directory="/home/pi/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/build" />
 		</Linker>
-		<Unit filename="MNN_UltraFace.cpp" />
-		<Unit filename="MNN_UltraFace.hpp" />
-		<Unit filename="MobileNetV1.cpp" />
-		<Unit filename="MobileNetV1.hpp" />
+		<Unit filename="MNN/MNN_UltraFace.cpp" />
+		<Unit filename="MNN/MNN_UltraFace.hpp" />
+		<Unit filename="TensorFlow/MobileNetV1.cpp" />
+		<Unit filename="TensorFlow/MobileNetV1.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="servo.cpp" />
 		<Unit filename="servo.hpp" />
