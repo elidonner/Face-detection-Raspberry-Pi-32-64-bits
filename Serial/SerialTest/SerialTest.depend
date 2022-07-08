@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1657214548 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Serial/serial.cpp
+	<stdio.h>
+	<string.h>
+	<fcntl.h>
+	<errno.h>
+	<termios.h>
+	<unistd.h>
+
+1657220912 source:/home/pi/516/Face-detection-Raspberry-Pi-32-64-bits/Serial/SerialTest/serial.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<signal.h>
+	<pigpio.h>
+
